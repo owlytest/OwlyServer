@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='utf-8'?>
+<job-scheduling-data xmlns="http://www.quartz-scheduler.org/xml/JobSchedulingData"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.quartz-scheduler.org/xml/JobSchedulingData  http://www.quartz-scheduler.org/xml/job_scheduling_data_2_0.xsd"
+  version="2.0">
+    <schedule>
+        <job>
+            <name>OwlySrvMainJob</name>            
+            <description>First job for Owly Server</description>
+            <job-class>com.owly.srv.Job.OwlySrvMainJob</job-class>
+        </job>
+       	    <trigger>
+	        <simple>
+	            <name>MainScheduledTrigger</name>
+	            <job-name>OwlySrvMainJob</job-name>
+	            <repeat-count>-1</repeat-count> <!-- repeat indefinitely  -->
+	            <repeat-interval>20000</repeat-interval>  <!--  every 20 seconds -->
+	        </simple>
+	    </trigger> 
+       
+    </schedule>
+    <schedule>
+		<job>
+			<name>OwlySrvCleanJob</name>
+			<description>This job is executed for cleaning purposes every night at 00:00</description>
+			<job-class>com.owly.srv.Job.OwlySrvCleanJob</job-class>
+		</job>
+ 
+		<trigger>
+			<cron>
+				<name>CleanScheduledTrigger</name>
+				<job-name>OwlySrvCleanJob</job-name>
+				<!-- It will run every date at 00:00 -->
+				<cron-expression>0 0 0 * * ?</cron-expression>
+				<!-- It will run every 5 secs -->
+				<!-- <cron-expression>0/5 * * * * ?</cron-expression>-->
+				
+			</cron>
+		</trigger>
+	 </schedule>    
+</job-scheduling-data>
+

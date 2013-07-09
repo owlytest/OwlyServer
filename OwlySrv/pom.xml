@@ -1,0 +1,247 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.owly</groupId>
+  <artifactId>OwlySrv</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>war</packaging>
+  <name>OwlySrv</name>
+  <url>http://maven.apache.org</url>
+  
+  <properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<tomcat.distribution>D:\Programas\Tomcat\${tomcat.file}</tomcat.distribution>
+   		
+		<OwlySrv.name>${project.artifactId}</OwlySrv.name>
+		<OwlySrv.version>${project.version}</OwlySrv.version>
+		<OwlySrv.tmp.folder>${basedir}\target\tmp-${project.artifactId}</OwlySrv.tmp.folder>
+		<OwlySrv.target.folder>${basedir}\target</OwlySrv.target.folder>
+		<OwlySrv.folder.name>OwlySrv-${project.version}</OwlySrv.folder.name>
+		<OwlySrv.folder>${OwlySrv.tmp.folder}\${OwlySrv.folder.name}</OwlySrv.folder>
+		<OwlySrv.Packaging>${OwlySrv.folder}\Packaging</OwlySrv.Packaging>
+		<build.version>${project.version}</build.version>
+		<installer.name>${project.artifactId}_Installer_${build.version}</installer.name>
+		<tomcat.version>apache-tomcat-7.0.39</tomcat.version>		
+		<tomcat.url>http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.39/bin/</tomcat.url>
+		<tomcat.file>${tomcat.version}.zip</tomcat.file>
+	</properties>
+	
+<build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.tomcat.maven</groupId>
+        <artifactId>tomcat7-maven-plugin</artifactId>
+        <version>7</version>
+      </plugin>
+      <!--Uncomment this plugin if you want to download from tomcat webserver, noew is configured to
+      have locally the file -->
+      <!-- 
+ 		<plugin>
+		    <groupId>org.codehaus.mojo</groupId>
+		    <artifactId>wagon-maven-plugin</artifactId>
+		    <version>1.0-beta-3</version>
+		    <executions>
+		        <execution>
+		            <id>${tomcat.version}</id>
+		            <phase>pre-integration-test</phase>
+		            <goals>
+		                <goal>download-single</goal>
+		            </goals>
+		            <configuration>
+		                <url>${tomcat.url}</url>
+		                <fromFile>${tomcat.file}</fromFile>
+		                <toDir>${OwlySrv.folder}</toDir>
+		            </configuration>
+		        </execution>
+		    </executions>
+		</plugin>
+		-->
+		<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.6</version>
+				<executions>
+					<execution>
+						<phase>install</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+						      <target name="package_generation">
+								<taskdef resource="net/sf/antcontrib/antcontrib.properties" classpath="${env.USERPROFILE}\.m2\repository\ant-contrib\ant-contrib\1.0b3\ant-contrib-1.0b3.jar"/>
+								<property name="nl" value="&#10;"/>
+					
+					<!-- Show properties of this project. -->
+					<!-- absolute path of the project. -->
+								<echo message="The home path is: ${basedir}"/>
+	  				
+	  				<!-- root directory of ant. -->
+								<echo message="The Project name is: ${ant.project.name}"/>
+								<echo message="The Ant version is: ${ant.version}"/>
+								<echo message="The Java version is: ${ant.java.version}"/>
+					
+					
+								<echo message="Preparing the installer"/>
+
+					<!-- Cleanning all folders prior sending the new packages -->
+								<delete dir="${OwlySrv.Packaging}"/>								
+					
+					<!-- Create Folder where we are going to package -->
+								<mkdir dir="${OwlySrv.Packaging}"/>
+								
+					<!-- Transfer packaging zip locally saved, 
+					if you want to used the donwload option  comment next line-->
+								<copy file="${tomcat.distribution}" 
+								tofile="${OwlySrv.Packaging}\${tomcat.file}"/>
+								
+					<!-- Unzip the tomcat distribution -->
+						<unzip src="${OwlySrv.Packaging}\${tomcat.file}" dest="${OwlySrv.Packaging}"/>
+					<!-- delete the zip file -->
+						<delete file="${OwlySrv.Packaging}\${tomcat.file}"/>
+					<!-- drop the application not usefull -->
+						<delete dir="${OwlySrv.Packaging}\${tomcat.version}\webapps\docs"/>
+						<delete dir="${OwlySrv.Packaging}\${tomcat.version}\webapps\examples"/>
+					<!-- transfer our application to webapps -->
+						<copy file="${OwlySrv.target.folder}\${OwlySrv.name}-${OwlySrv.version}.war" 
+								todir="${OwlySrv.Packaging}\${tomcat.version}\webapps"/>
+
+					<!-- Create and copy propierties files -->								
+						<mkdir dir="${OwlySrv.Packaging}\${tomcat.version}\properties"/>
+						<copy file="${basedir}\src\main\resources\properties\OwlySrv.xml" 
+								todir="${OwlySrv.Packaging}\${tomcat.version}\properties"/>
+						<copy file="${basedir}\src\main\resources\properties\OwlySrv.xsd" 
+								todir="${OwlySrv.Packaging}\${tomcat.version}\properties"/>
+								
+					<!-- Copy tomcat user files -->
+						<copy file="${basedir}\src\main\resources\tomcat-users.xml" 
+								todir="${OwlySrv.Packaging}\${tomcat.version}\conf"/>
+													
+								
+						<!-- Create a file with version of the package -->
+								<echo file="${OwlySrv.Packaging}\${tomcat.version}\OwlySrv.version" append="true">
+									${project.artifactId}-${project.version}-${project.packaging}
+								</echo>
+
+					<!-- Start preparing the install package -->
+								<echo message="Packing ${project.artifactId} version ${build.version}${nl}"/>
+					
+								<property name="temp.pack.dir" value="${basedir}\target\pack"/>
+								<property name="temp.pack.files.dir" value="${basedir}\target\pack-files"/>
+								<property name="dist.dir" value="${basedir}\target\dist"/>
+					
+								<property name="inst.file" value="${temp.pack.dir}\${installer.name}.bin"/>
+								<property name="inst.tar" value="${dist.dir}\${installer.name}.tar"/>
+					
+								<delete dir="${temp.pack.dir}"/>
+								<delete dir="${temp.pack.files.dir}"/>
+								<delete dir="${dist.dir}"/>
+					
+								<mkdir dir="${temp.pack.dir}"/>
+								<mkdir dir="${temp.pack.files.dir}"/>
+								<mkdir dir="${dist.dir}"/>
+
+					<!-- Add file that will be in the package-->
+								<copy todir="${temp.pack.files.dir}">
+									<fileset dir="${basedir}\src\main\resources\installer">
+										<include name="**/*"/>
+									</fileset>
+								</copy>
+																
+						
+					<!-- Generate the tar file-->
+								<fixcrlf srcdir="${temp.pack.files.dir}" eol="lf" includes="**/*" excludes=""/>
+					
+								<tar longfile="gnu" destfile="${temp.pack.dir}/files.tar">
+									<tarfileset dir="${OwlySrv.Packaging}" includes="**/*" preserveLeadingSlashes="true" />
+								</tar>
+								
+								<gzip src="${temp.pack.dir}\files.tar" destfile="${temp.pack.dir}\files.tar.gz"/>
+					
+								<concat destfile="${inst.file}" append="true" binary="true">
+									<filelist dir="${temp.pack.files.dir}" files="install.sh"/>									
+									<filelist dir="${temp.pack.dir}" files="files.tar.gz"/>
+								</concat>
+					
+								<tar longfile="gnu" destfile="${inst.tar}">
+									<tarfileset dir="${temp.pack.dir}" includes="*.bin" preserveLeadingSlashes="true" filemode="744"/>
+									<tarfileset dir="${temp.pack.files.dir}" includes="*.properties, README.txt" preserveLeadingSlashes="true" filemode="744"/>
+					
+								</tar>
+							</target>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>								
+      
+      
+    </plugins>
+  </build>
+
+  <dependencies>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+      <version>2.4</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet.jsp</groupId>
+      <artifactId>jsp-api</artifactId>
+      <version>2.1</version>
+      <scope>provided</scope>
+    </dependency>
+    
+    <dependency>
+    	<groupId>org.quartz-scheduler</groupId>
+    	<artifactId>quartz</artifactId>
+    	<version>2.1.7</version>
+    </dependency>
+      <dependency>
+         <groupId>javax.transaction</groupId>
+         <artifactId>jta</artifactId>
+         <version>1.1</version>
+      </dependency>
+      <dependency>
+         <groupId>org.slf4j</groupId>
+         <artifactId>slf4j-log4j12</artifactId>
+         <version>1.6.6</version>
+      </dependency>
+    
+
+      <dependency>
+	<groupId>log4j</groupId>
+	<artifactId>log4j</artifactId>
+	<version>1.2.17</version>
+    </dependency>
+    
+<dependency>
+	<groupId>xerces</groupId>
+	<artifactId>xercesImpl</artifactId>
+	<version>2.11.0</version>
+</dependency>
+            
+ <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongo-java-driver</artifactId>
+            <version>2.10.1</version>
+  </dependency>
+  
+<dependency>
+	<groupId>com.googlecode.json-simple</groupId>
+	<artifactId>json-simple</artifactId>
+	<version>1.1</version>
+</dependency>
+
+   <!--  Gson: Java to Json conversion -->
+    <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+      <version>2.2.4</version>
+      <scope>compile</scope>
+    </dependency>            
+
+</dependencies>
+
+ 
+</project>

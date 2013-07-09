@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<xs:simpleType name="IP">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ServerType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="LoadServer"/>
+			<xs:enumeration value="AdminServer"/>
+			<xs:enumeration value="SubsServer"/>
+			<xs:enumeration value="JMSServer"/>
+			<xs:enumeration value="DatabaseServer"/>
+			<xs:enumeration value="ApacheServer"/>
+			<xs:enumeration value="DimServer"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="AnalyzeType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="SingleHost"/>
+			<xs:enumeration value="MultiHost"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="StatType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Stats_Vmstat"/>
+			<xs:enumeration value="Stats_TopCPU"/>
+			<xs:enumeration value="Stats_IdleCPU"/>
+			<xs:enumeration value="Stats_VmRSS"/>
+			<xs:enumeration value="Stats_SwapKB"/>
+			<xs:enumeration value="Stats_Top10VmRSS"/>
+			<xs:enumeration value="Stats_Top10CPU"/>
+			<xs:enumeration value="Stats_AllBytesxsec"/>
+			<xs:enumeration value="Stats_Bytesxsec"/>
+			<xs:enumeration value="Stats_MaxBusyIO"/>
+			<xs:enumeration value="Stats_Multi_BusyIO"/>
+			<xs:enumeration value="Stats_Multi_Bytesxsec"/>
+			<xs:enumeration value="Stats_Multi_VmRSS"/>
+			<xs:enumeration value="Stats_Multi_IdleCPU"/>
+			<xs:enumeration value="Stats_Multi_SwapKB"/>
+			<xs:enumeration value="Stats_Testing"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="Stats4PerfSrvCfg">
+		<xs:complexType>
+			<xs:sequence maxOccurs="1" minOccurs="1">
+				<xs:element maxOccurs="1" minOccurs="1" ref="Platform_configuration"/>
+				<xs:element minOccurs="1" ref="StatsServer_Configuration"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Platform_configuration">
+		<xs:complexType>
+			<xs:sequence maxOccurs="unbounded" minOccurs="1">
+				<xs:element maxOccurs="unbounded" minOccurs="1" ref="node"/>
+			</xs:sequence>
+			<xs:attribute name="name" type="xs:NCName" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="node">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element minOccurs="1" name="NodeIPAddress" type="IP"/>
+				<xs:element minOccurs="1" name="SrvType" type="ServerType"/>
+				<xs:element minOccurs="1" name="ClientPort" type="xs:integer"/>
+			</xs:sequence>
+			<xs:attribute name="name" type="xs:NCName" use="required"/>
+			<xs:attribute name="enabled" type="xs:boolean" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="StatsServer_Configuration">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="StatsDatabase" type="xs:NCName"/>
+				<xs:element name="StatsDatabaseType" type="xs:NCName"/>
+				<xs:element name="StatsCollect" type="xs:NCName"/>
+				<xs:element name="SavedDays" type="xs:integer"/>
+				<xs:element name="StatsIpAddress" type="IP"/>
+				<xs:element name="StatsPort" type="xs:integer"/>
+				<xs:element name="StatsTypeDef">
+					<xs:complexType>
+						<xs:sequence maxOccurs="unbounded" minOccurs="1">
+							<xs:element name="StatsType">
+								<xs:complexType>
+									<xs:sequence maxOccurs="unbounded" minOccurs="1">
+										<xs:element name="StatsNode" type="xs:string"/>
+									</xs:sequence>
+									<xs:attribute name="type" type="AnalyzeType" use="required"/>
+									<xs:attribute name="stat" type="StatType" use="required"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="enabled" type="xs:boolean" use="required"/>
+			<xs:attribute name="Monitoring" type="xs:boolean" use="required"/>
+			<xs:attribute name="name" type="xs:NCName" use="required"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

@@ -1,0 +1,74 @@
+#!/bin/bash
+#
+RETVAL=0;
+
+start() {
+	echo "Starting OwlyClnt ..."
+	pid=`ps aux | grep 'com.owly.clnt.OwlyClnt' | grep -v grep | awk '{print $2}'`
+	if [[ -z "$pid" ]]; then	
+		./Start_OwlyClnt.sh &
+		pid=`ps aux | grep 'com.owly.clnt.OwlyClnt' | grep -v grep | awk '{print $2}'`		
+		if [[ -z "$pid" ]]; then
+			echo "Not able to start OwlyClnt !!"
+		else
+			echo "OwlyClnt Started ..."
+		fi
+		
+	else
+		echo "OwlyClnt already running ( PID = $pid)"
+	fi
+	
+}
+
+stop() {
+	pid=`ps aux | grep 'com.owly.clnt.OwlyClnt' | grep -v grep | awk '{print $2}'`
+	if [[ -z "$pid" ]]; then
+		echo "OwlyClnt not running"
+	else
+		echo "OwlyClnt running"
+		kill -9 $pid
+		pid=`ps aux | grep 'com.owly.clnt.OwlyClnt' | grep -v grep | awk '{print $2}'`		
+		if [[ -z "$pid" ]]; then
+			echo "OwlyClnt Stopped ..."
+		else
+			echo "Not able to stop process !!!"
+		fi
+	fi
+}
+
+status() {
+	pid=`ps aux | grep 'com.owly.clnt.OwlyClnt' | grep -v grep | awk '{print $2}'`
+	if [[ -z "$pid" ]]; then
+		echo "OwlyClnt not running"
+	else
+		echo "OwlyClnt  running ( PID = $pid)"
+	fi
+}
+
+
+restart() {
+stop
+start
+}
+
+case "$1" in
+start)
+  start
+;;
+stop)
+  stop
+;;
+restart)
+  restart
+;;
+status)
+  status
+;;
+
+*)
+
+echo "Usage: $0 {start|stop|restart|status}"
+exit 1
+esac
+
+exit $RETVAL  

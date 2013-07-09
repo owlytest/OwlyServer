@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Stats4PerfSrvCfg xsi:noNamespaceSchemaLocation="OwlySrv.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<Platform_configuration name="MCM_Platform_HA">
+	<!--  
+	Platform Definition where LoadTests are executed 	
+	Type of Server is : LoadServer,AdminServer,SubsServer,JMSServer, and DatabaseServer
+	
+	<node name="adm1">  Name used in configuration to refer this server.
+		<NodeIPAddress>135.248.3.78</NodeIPAddress>  IP of this server
+		<SrvType>AdminServer</SrvType>  Type of server in the plaform ( LoadServer, AdminServer, SubsServer,JMSServer,DatabaseServer)
+	</node>
+	--> 
+
+		<!-- <node name="as-adm-a" enabled="true">
+			<NodeIPAddress>159.23.98.17</NodeIPAddress>
+			<SrvType>AdminServer</SrvType>
+			<ClientPort>5000</ClientPort>
+		</node> -->
+		<node name="owlysrv" enabled="true">
+			<NodeIPAddress>127.0.0.1</NodeIPAddress>
+			<SrvType>AdminServer</SrvType>
+			<ClientPort>5000</ClientPort>
+		</node>
+		<!-- <node name="as-sub-a" enabled="true">
+			<NodeIPAddress>159.23.99.100</NodeIPAddress>
+			<SrvType>SubsServer</SrvType>
+			<ClientPort>5000</ClientPort>
+		</node> -->
+	</Platform_configuration>
+	<StatsServer_Configuration name="StatServer" enabled="true" Monitoring="false">
+	<!--  
+	Definition of the Stats Server to get metrics of the Stats  :
+	StatsDatabase : DataBase name,
+	StatsCollect : Is the Name of the Collect created ,
+	Dates are dates used for automatic recollectionis executed only
+	-->
+		<StatsDatabase>OWLYSRV</StatsDatabase>
+		<StatsDatabaseType>MONGODB</StatsDatabaseType>
+		<StatsCollect>PerformanceTests</StatsCollect>
+		<SavedDays>5</SavedDays>
+		<StatsIpAddress>127.0.0.1</StatsIpAddress>
+		<StatsPort>27017</StatsPort>
+		<StatsTypeDef>
+		<!--  
+		Definition of reports we want to get from Dimitrik,
+			Reports have been previously created in DImStat as BookMarks.
+			Two kind of reports can be executed : SingleHost or MultiHost, refer 
+			DImStat Documentation for this	
+		--> 
+			<StatsType stat="Stats_Vmstat" type="SingleHost">
+				<StatsNode>owlysrv</StatsNode>
+				<!-- <StatsNode>as-adm-b</StatsNode>
+				<StatsNode>as-sub-a</StatsNode> -->
+			</StatsType>
+			<StatsType stat="Stats_TopCPU" type="SingleHost">
+				<StatsNode>owlysrv</StatsNode>
+				<!-- <StatsNode>as-adm-b</StatsNode>
+				<StatsNode>as-sub-a</StatsNode> -->
+			</StatsType>
+		</StatsTypeDef>
+	</StatsServer_Configuration>
+	
+</Stats4PerfSrvCfg>
