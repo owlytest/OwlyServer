@@ -108,8 +108,26 @@ public class ApplicationListener implements ServletContextListener,
 		String PropXML = context.getInitParameter("PropertiesXML");
 		String PropXSD = context.getInitParameter("PropertiesXSD");
 		
-		String PropertiesXML = Format4OSDependent(PropXML);
-		String PropertiesXSD = Format4OSDependent(PropXSD);
+		//Format for operating system
+		String osNameXML = Format4OSDependent(PropXML);
+		String osNameXSD = Format4OSDependent(PropXSD);
+		
+		//get file component
+		String nameXML = fileComponent(osNameXML);
+		String nameXSD = fileComponent(osNameXSD);
+		
+		String catalinaBase=System.getProperty("catalina.base");
+		logger.debug("This catalina base : " + catalinaBase);
+		
+		logger.debug("Files to check in folder properties : " + nameXML +" and " + nameXSD);
+		
+		String PropertiesXML=catalinaBase+File.separator+"properties"+File.separator+nameXML;
+		
+		logger.info("XML file to check : " + PropertiesXML);
+		
+		String PropertiesXSD=catalinaBase+File.separator+"properties"+File.separator+nameXSD;
+		
+		logger.info("XSD file to check : " + PropertiesXSD);
 
 		logger.info("Checking if properties files exist");
 
@@ -331,6 +349,7 @@ public class ApplicationListener implements ServletContextListener,
 		boolean exists = true;
 
 		logger.debug("Checking if file " + FileName + " Exists");
+		
 
 		File file = new File(FileName);
 		
@@ -369,6 +388,19 @@ public class ApplicationListener implements ServletContextListener,
 		
 		return newFilename;
 	}
+	/**
+	   * Remove path information from a filename returning only its file component
+	   * 
+	   * @param filename
+	   *            The filename
+	   * @return The filename without path information
+
+	   */
+	  public  String fileComponent(String filename) {
+		  
+	      int i = filename.lastIndexOf(File.separator);
+	      return (i > -1) ? filename.substring(i + 1) : filename;
+	  }
 	
 	/**
 	 * Method executed for the validation of the configuration XML file with its

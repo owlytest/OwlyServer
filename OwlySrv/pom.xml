@@ -116,7 +116,11 @@
 					<!-- Copy tomcat user files -->
 						<copy file="${basedir}\src\main\resources\tomcat-users.xml" 
 								todir="${OwlySrv.Packaging}\${tomcat.version}\conf"/>
-													
+
+					<!-- Copy tomcat service to bin -->
+						<copy file="${basedir}\src\main\resources\tomcat7d" 
+								todir="${OwlySrv.Packaging}\${tomcat.version}\bin"/>
+								
 								
 						<!-- Create a file with version of the package -->
 								<echo file="${OwlySrv.Packaging}\${tomcat.version}\OwlySrv.version" append="true">

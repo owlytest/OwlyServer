@@ -11,6 +11,6 @@ Owly Server Installaton
 	- Change binary to 777 --> chmod 777 OwlySrv_Installer_<version>.bin
 	- Execute it : ./OwlySrv_Installer_<version>.bin
 	
-4.- Start the tomcat with the application installed :  
-	 - cd <tomcat_version>/bin/
-	 -  ./startup.sh
+4.- Start the tomcat with the application installed :
+	service tomcat7d start  
+

@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Stats4PerfSrvCfg xsi:noNamespaceSchemaLocation="OwlySrv.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-	<Platform_configuration name="MCM_Platform_HA">
+	<Platform_configuration name="Platform_HA">
 	<!--  
 	Platform Definition where LoadTests are executed 	
 	Type of Server is : LoadServer,AdminServer,SubsServer,JMSServer, and DatabaseServer
 	
 	<node name="adm1">  Name used in configuration to refer this server.
-		<NodeIPAddress>135.248.3.78</NodeIPAddress>  IP of this server
+		<NodeIPAddress>127.23.98.78</NodeIPAddress>  IP of this server
 		<SrvType>AdminServer</SrvType>  Type of server in the plaform ( LoadServer, AdminServer, SubsServer,JMSServer,DatabaseServer)
 	</node>
 	--> 
 
 		<!-- <node name="as-adm-a" enabled="true">
-			<NodeIPAddress>159.23.98.17</NodeIPAddress>
+			<NodeIPAddress>127.23.98.17</NodeIPAddress>
 			<SrvType>AdminServer</SrvType>
 			<ClientPort>5000</ClientPort>
 		</node> -->
@@ -22,7 +22,7 @@
 			<ClientPort>5000</ClientPort>
 		</node>
 		<!-- <node name="as-sub-a" enabled="true">
-			<NodeIPAddress>159.23.99.100</NodeIPAddress>
+			<NodeIPAddress>127.23.99.100</NodeIPAddress>
 			<SrvType>SubsServer</SrvType>
 			<ClientPort>5000</ClientPort>
 		</node> -->
@@ -37,7 +37,7 @@
 		<StatsDatabase>OWLYSRV</StatsDatabase>
 		<StatsDatabaseType>MONGODB</StatsDatabaseType>
 		<StatsCollect>PerformanceTests</StatsCollect>
-		<SavedDays>5</SavedDays>
+		<SavedDays>1</SavedDays>
 		<StatsIpAddress>127.0.0.1</StatsIpAddress>
 		<StatsPort>27017</StatsPort>
 		<StatsTypeDef>

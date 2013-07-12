@@ -77,6 +77,16 @@ if [ $nbsh -ne 0 ]; then
     find . -name "*sh" | xargs chmod 777
 fi
 
+#Generate the Service deamon file
+cd ..
+catalina_home_dir=`pwd`
+echo "catalina home is $catalina_home_dir"
+sed -i "s/#catalina_home#/$(echo $catalina_home_dir | sed "s/\//\\\\\//g")/g" ./bin/tomcat7d
+cp  ./bin/tomcat7d /etc/init.d/tomcat7d
+chkconfig --add tomcat7d
+chkconfig --level 234 tomcat7d on
+chmod '755' /etc/init.d/tomcat7d
+
 #Remove Installation files
 cd $Act_Dir
 rm -f OwlySrv_Installer*
