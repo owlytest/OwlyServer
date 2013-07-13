@@ -81,11 +81,18 @@ fi
 cd ..
 catalina_home_dir=`pwd`
 echo "catalina home is $catalina_home_dir"
-sed -i "s/#catalina_home#/$(echo $catalina_home_dir | sed "s/\//\\\\\//g")/g" ./bin/tomcat7d
-cp  ./bin/tomcat7d /etc/init.d/tomcat7d
-chkconfig --add tomcat7d
-chkconfig --level 234 tomcat7d on
-chmod '755' /etc/init.d/tomcat7d
+sed -i "s/#catalina_home#/$(echo $catalina_home_dir | sed "s/\//\\\\\//g")/g" ./bin/OwlySrvd
+sed -i 's/\r//' ./bin/OwlySrvd
+cp  ./bin/OwlySrvd /etc/init.d/OwlySrvd
+chkconfig --add OwlySrvd
+chkconfig --level 234 OwlySrvd on
+chmod '755' /etc/init.d/OwlySrvd
+
+sed -i "s/#catalina_home#/$(echo $catalina_home_dir | sed "s/\//\\\\\//g")/g" ./bin/OwlySrvd.conf
+sed -i 's/\r//' ./bin/OwlySrvd.conf
+cp  ./bin/OwlySrvd.conf /etc/init.d/OwlySrvd.conf
+
+ 
 
 #Remove Installation files
 cd $Act_Dir

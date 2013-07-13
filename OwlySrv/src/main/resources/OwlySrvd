@@ -1,0 +1,44 @@
+#!/bin/sh
+#Tomcat starting script
+#
+#chkconfig: 345 90 10
+#description: tomcat
+#prcocessname: tomcat7
+
+CATALINA_HOME=#catalina_home#
+
+. ./OwlySrvd.conf
+
+
+case $1 in
+        start)
+                echo "Starting OwlySrv"
+                sh $CATALINA_HOME/bin/startup.sh >/dev/null 2>&1
+                ;;
+        stop)
+                echo "Stopping OwlySrv"
+                sh $CATALINA_HOME/bin/shutdown.sh >/dev/null 2>&1
+                ;;
+
+       status)
+                pid=`ps uwwx | grep -v grep | grep "$CATALINA_HOME" | grep java | grep startup | awk '{print $2}'`
+                if [ "x${pid}" != "x" ]
+                then
+                        echo "OwnlySrv ( pid $pid ) is running..."
+                        exit 2
+                else
+                        echo "OwlySrv is stopped"
+                        exit 2
+                fi
+                ;;
+
+       restart)
+                /etc/init.d/OwlySrvd stop
+                /etc/init.d/OwlySrvd start
+                ;;
+
+        *)
+                # usage
+                echo "Usage: $0 start|stop|status|restart"
+                ;;
+esac

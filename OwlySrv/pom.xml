@@ -118,8 +118,11 @@
 								todir="${OwlySrv.Packaging}\${tomcat.version}\conf"/>
 
 					<!-- Copy tomcat service to bin -->
-						<copy file="${basedir}\src\main\resources\tomcat7d" 
+						<copy file="${basedir}\src\main\resources\OwlySrvd" 
 								todir="${OwlySrv.Packaging}\${tomcat.version}\bin"/>
+						<copy file="${basedir}\src\main\resources\OwlySrvd.conf" 
+								todir="${OwlySrv.Packaging}\${tomcat.version}\bin"/>
+								
 								
 								
 						<!-- Create a file with version of the package -->
