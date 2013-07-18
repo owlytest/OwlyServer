@@ -107,9 +107,6 @@ while (iterator.hasNext()) {
 	//Process all values from the list of metrics to save in a format valid for flot.
 	flotJsonData.insertDataMetrics(ListMetric, offset);
 
-	//Execute interpolation of data where if we have a big gap we will add zero values in it.		
-	//flotJsonData.interpolateDataMetrics(repeatInterval,(float)0);
-
 	logger.debug("flotJsonData =" + flotJsonData.toString());
 	resToFlot.add(flotJsonData);
 
