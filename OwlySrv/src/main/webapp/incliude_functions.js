@@ -609,10 +609,10 @@
 			$("#"+actual_plot).css(css_size); //Chnage the size based in the container --> this is due to a bug in Flot plugion.
 			num_of_plots=num_of_plots+1; // a new plot is added.
 			if ( type_analysis == "online" ){
-				display_online_chart(actual_plot,tittle_id,in_namesrv,in_ipsrv,type_stat,type_metric,minutes_to_chk); // Display now the plot with this function.
+				display_online_chart(actual_plot,tittle_id,in_namesrv,in_ipsrv,type_stat,type_metric,minutes_to_chk,number_returned_metrics); // Display now the plot with this function.
 			}
 			else{
-				display_offline_chart(actual_plot,tittle_id,in_namesrv,in_ipsrv,type_stat,type_metric,start_date,end_date); // Display now the plot with this function.
+				display_offline_chart(actual_plot,tittle_id,in_namesrv,in_ipsrv,type_stat,type_metric,start_date,end_date,number_returned_metrics); // Display now the plot with this function.
 			}
 			//Create a new object with info related to this plot
 			fplot_obj=new Object();

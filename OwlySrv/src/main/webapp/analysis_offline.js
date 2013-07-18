@@ -15,7 +15,7 @@
 * limitations under the License.
 */
 //Online chart
-function display_offline_chart(actual_plot,tittle_id,in_namesrv,in_ipsrv,type_stat,type_metric,start_date,end_date){
+function display_offline_chart(actual_plot,tittle_id,in_namesrv,in_ipsrv,type_stat,type_metric,start_date,end_date,number_returned_metrics){
 	
 	var options = {
 			lines: {
@@ -39,7 +39,7 @@ function display_offline_chart(actual_plot,tittle_id,in_namesrv,in_ipsrv,type_st
 		var offset_browser = new Date().getTimezoneOffset();	
 		myconsolelog("Offset is : " + offset_browser);
 
-		var parameters_to_send = nameserver+"&"+ipserver+"&start_date="+start_date+"&end_date="+end_date+"&offset_browser="+offset_browser+"&type_stat="+type_stat+"&type_metric="+type_metric
+		var parameters_to_send = nameserver+"&"+ipserver+"&start_date="+start_date+"&end_date="+end_date+"&offset_browser="+offset_browser+"&type_stat="+type_stat+"&type_metric="+type_metric+"&num_metrics="+number_returned_metrics
 		myconsolelog(parameters_to_send);
 		
 		//Add tittle to the plot		

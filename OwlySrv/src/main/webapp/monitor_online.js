@@ -15,7 +15,7 @@
 * limitations under the License.
 */
 //Online chart
-function display_online_chart(actual_plot,tittle_id,in_namesrv,in_ipsrv,type_stat,type_metric,minutes_to_check){
+function display_online_chart(actual_plot,tittle_id,in_namesrv,in_ipsrv,type_stat,type_metric,minutes_to_check,number_returned_metrics){
 	
 	var options = {
 			lines: {
@@ -40,7 +40,7 @@ function display_online_chart(actual_plot,tittle_id,in_namesrv,in_ipsrv,type_sta
 		myconsolelog("Offset is : " + offset_browser);
 
 		
-		var parameters_to_send = nameserver+"&"+ipserver+"&minutes_to_check="+minutes_to_check+"&type_stat="+type_stat+"&type_metric="+type_metric+"&offset_browser="+offset_browser
+		var parameters_to_send = nameserver+"&"+ipserver+"&minutes_to_check="+minutes_to_check+"&type_stat="+type_stat+"&type_metric="+type_metric+"&offset_browser="+offset_browser+"&num_metrics="+number_returned_metrics
 		myconsolelog(parameters_to_send);
 		
 		

@@ -50,7 +50,7 @@ Integer portserver = (Integer) application.getAttribute("PORTSERVER");
 String dbtype = (String)application.getAttribute("DATABASETYPE");
 //out.print("dbtype is  : " + dbtype);
 
-Long repeatInterval = (Long)application.getAttribute("REPEATINTERVAL");
+long repeatInterval = (Long)application.getAttribute("REPEATINTERVAL");
 
 
 logger.debug("Environment variables : DBNAME="+db+
@@ -66,8 +66,9 @@ String type_metric = request.getParameter("type_metric");
 String start_date = request.getParameter("start_date");
 String end_date = request.getParameter("end_date");
 Integer offset = Integer.valueOf(request.getParameter("offset_browser"));
+Integer num_metrics = Integer.valueOf(request.getParameter("num_metrics"));
 
-logger.debug("parameters received : nameserver="+nameRemServer+" and ipserver="+ipRemServer +" and type_stat="+type_stat+" and type_metric="+type_metric+" and start_date="+start_date+ " and end_date=" + end_date+" and offset="+offset);
+logger.debug("parameters received : nameserver="+nameRemServer+" and ipserver="+ipRemServer +" and type_stat="+type_stat+" and type_metric="+type_metric+" and start_date="+start_date+ " and end_date=" + end_date+" and offset="+offset+" and num_metrics="+num_metrics);
 
 SimpleDateFormat dtformat  = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 Date dateStart=dtformat.parse(start_date);
@@ -104,7 +105,7 @@ while (iterator.hasNext()) {
 	
 	//Create the DAO for accesing database stats	
 	RemoteBasicStatMongoDAOImpl remoteBasicStatMongoDAO = new RemoteBasicStatMongoDAOImpl(statsDB,StatsCollection);
-	ArrayList<BasicStat> ListMetric = remoteBasicStatMongoDAO.getMetricDetails(shortRmt, type_stat, type_metric,dateStart,dateEnd);	
+	ArrayList<BasicStat> ListMetric = remoteBasicStatMongoDAO.getMetricDetails(shortRmt, type_stat, type_metric,dateStart,dateEnd,num_metrics,repeatInterval,(double)0);
 
 	Iterator it = ListMetric.iterator();
 	
@@ -118,9 +119,6 @@ while (iterator.hasNext()) {
 	
 	//Process all values from the list of metrics to save in a format valid for flot.
 	flotJsonData.insertDataMetrics(ListMetric, offset);
-
-	//Execute interpolation of data where if we have a big gap we will add zero values in it.		
-	flotJsonData.interpolateDataMetrics(repeatInterval,(float)0);
 
 	logger.debug("flotJsonData =" + flotJsonData.toString());
 	resToFlot.add(flotJsonData);

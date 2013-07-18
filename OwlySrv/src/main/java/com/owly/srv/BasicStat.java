@@ -16,7 +16,10 @@
 */
 package com.owly.srv;
 
+import java.util.ArrayList;
 import java.util.Date;
+
+import org.apache.log4j.Logger;
 
 
 /**
@@ -42,6 +45,23 @@ public class BasicStat {
 	}
 	public void setValue(String value) {
 		Value = value;
+	}
+	
+	public  void setAvgBasicStatList (ArrayList<BasicStat> listBasisStat){
+		Logger logger = Logger.getLogger(BasicStat.class);
+		
+		double AvgValue = 0; 
+		Integer numberOfData=listBasisStat.size();
+		for (int i=0;i<numberOfData;i++){
+			//logger.debug("data to measure = " + listBasisStat.get(i).toString() );
+			AvgValue = AvgValue + Double.valueOf(listBasisStat.get(i).getValue());
+		}
+		AvgValue = AvgValue / (double)numberOfData;
+		//logger.debug("Avg of the mesure = " + Double.toString(AvgValue));
+		
+		this.setValue(Double.toString(AvgValue));
+		this.setDate(listBasisStat.get(0).getDate());
+		
 	}
 	@Override
 	public String toString() {

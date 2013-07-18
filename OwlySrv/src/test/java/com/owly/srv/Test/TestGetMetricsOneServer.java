@@ -23,12 +23,12 @@ public class TestGetMetricsOneServer {
 	 */
 	public static void main(String[] args) {
 		
-		Logger logger = Logger.getLogger("getTypeMetricfromStat.jsp");
+		Logger logger = Logger.getLogger("TestGetMetricsOneServer.class");
 
 		String db = "MCMLOAD";
 		//out.print("database is  : " + db);
 
-		String ipserver = "127.0.0.1";
+		String ipserver = "159.23.98.17";
 		//out.print("ip is  : " + ipserver);
 
 		Integer portserver = 27017;
@@ -52,7 +52,7 @@ public class TestGetMetricsOneServer {
 		String type_stat = "WinTypeperf";
 		String type_metric = "mem_used";
 		Integer offset = -120;
-		Integer minutes = 1000;		
+		Integer minutes = 10;		
 		logger.debug("parameters received : nameserver="+nameRemServer+" and ipserver="+ipRemServer +" and type_stat="+type_stat+" and type_metric="+type_metric+" and minutes_to_check="+minutes+" and offset="+offset);
 
 		//Create this object for filtering later
@@ -86,9 +86,6 @@ public class TestGetMetricsOneServer {
 		flotJsonData.insertDataMetrics(ListMetric, offset);
 		
 		logger.debug("flotJsonData =" + flotJsonData.toString());
-		
-		
-		flotJsonData.interpolateDataMetrics(repeatInterval,(float)0);
 		
 		logger.debug("flotJsonData =" + flotJsonData.toString());
 				

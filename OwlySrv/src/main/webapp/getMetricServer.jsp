@@ -48,7 +48,7 @@ Integer portserver = (Integer) application.getAttribute("PORTSERVER");
 String dbtype = (String)application.getAttribute("DATABASETYPE");
 //out.print("dbtype is  : " + dbtype);
 
-Long repeatInterval = (Long)application.getAttribute("REPEATINTERVAL");
+long repeatInterval = (Long)application.getAttribute("REPEATINTERVAL");
 
 
 logger.debug("Environment variables : DBNAME="+db+
@@ -63,7 +63,9 @@ String type_stat = request.getParameter("type_stat");
 String type_metric = request.getParameter("type_metric");
 Integer minutes = Integer.valueOf(request.getParameter("minutes_to_check"));
 Integer offset = Integer.valueOf(request.getParameter("offset_browser"));
-logger.debug("parameters received : nameserver="+nameRemServer+" and ipserver="+ipRemServer +" and type_stat="+type_stat+" and type_metric="+type_metric+" and minutes_to_check="+minutes+" and offset="+offset);
+Integer num_metrics = Integer.valueOf(request.getParameter("num_metrics"));
+
+logger.debug("parameters received : nameserver="+nameRemServer+" and ipserver="+ipRemServer +" and type_stat="+type_stat+" and type_metric="+type_metric+" and minutes_to_check="+minutes+" and offset="+offset+" and num_metrics="+num_metrics);
 
 //Create this object for filtering later
 ArrayList<ShortRemoteServerId>  shortRemoteServer = new ArrayList<ShortRemoteServerId>();
@@ -91,7 +93,7 @@ while (iterator.hasNext()) {
 
 	//Create the DAO for accesing database stats	
 	RemoteBasicStatMongoDAOImpl remoteBasicStatMongoDAO = new RemoteBasicStatMongoDAOImpl(statsDB,StatsCollection);
-	ArrayList<BasicStat> ListMetric = remoteBasicStatMongoDAO.getMetricDetails(shortRmt, type_stat, type_metric, minutes);
+	ArrayList<BasicStat> ListMetric = remoteBasicStatMongoDAO.getMetricDetails(shortRmt, type_stat, type_metric, minutes,num_metrics,repeatInterval,(double)0);
 			
 	Iterator it = ListMetric.iterator();
 
@@ -106,7 +108,7 @@ while (iterator.hasNext()) {
 	flotJsonData.insertDataMetrics(ListMetric, offset);
 
 	//Execute interpolation of data where if we have a big gap we will add zero values in it.		
-	flotJsonData.interpolateDataMetrics(repeatInterval,(float)0);
+	//flotJsonData.interpolateDataMetrics(repeatInterval,(float)0);
 
 	logger.debug("flotJsonData =" + flotJsonData.toString());
 	resToFlot.add(flotJsonData);

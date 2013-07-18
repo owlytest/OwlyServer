@@ -77,6 +77,7 @@
 		var open_plots = new Array(); // This array contains the online plots ongoing, which is used for upating the values.
 		var debug_console=true; // This variable is used to add console.log funcionality or disable it.
 		var type_of_analyze="online"; // This variable is used to know if we are doing an online analysos or offline, becouse the behaviour of the system is different.
+		var number_returned_metrics=180; // Ths values is generated for limiting the number of metrcis answered by the backend, and limit so the network traffic. 
 		
 
 	// This function is ised for configuring the aler mgs box using the dialog UI jquery		
@@ -311,7 +312,7 @@
 							open_plots[i].actual_container+","+
 							open_plots[i].namesrv+","+open_plots[i].ipsrv+","+open_plots[i].typestat+","+
 							open_plots[i].typemetric+","+open_plots[i].minutestochk);
-						display_online_chart(open_plots[i].actual_plot,open_plots[i].tittle_id,open_plots[i].namesrv,open_plots[i].ipsrv,open_plots[i].typestat,open_plots[i].typemetric,open_plots[i].minutestochk);
+						display_online_chart(open_plots[i].actual_plot,open_plots[i].tittle_id,open_plots[i].namesrv,open_plots[i].ipsrv,open_plots[i].typestat,open_plots[i].typemetric,open_plots[i].minutestochk,number_returned_metrics);
 						}
 						
 					}

@@ -31,13 +31,20 @@ import java.util.Set;
 public interface RemoteBasicStatMongoDAO {
 
 	/**
-	 * Methos which defined the insertion of a RemoteBasicStat in the Mongo DB
+	 * Method which defined the insertion of a RemoteBasicStat in the Mongo DB
 	 * 
 	 * @param remoteBasicStat
 	 */
 	public void insertRemoteBasicStat(RemoteBasicStat remoteBasicStat);
 	
-	
+	/**
+	 * This method will add values to the list of metrics when no metrics have been obtained and a big gap exists in the middle of the metrics.
+	 * @param listBasicStat List of metrics
+	 * @param repeatInterval Based in this value sif a big gap is observed in the list some new values will be inserted
+	 * @param value_inteporlation Value to insert when is necessary
+	 * @return List with values added if a big gap is in the middle.	 
+	 */
+	ArrayList<BasicStat> addValuesToList (ArrayList<BasicStat> listBasicStat, long repeatInterval, double value_inteporlation);
 	
 	/**
 	 * Method to get the list of different stats for this server and in this period of time
@@ -134,11 +141,40 @@ public interface RemoteBasicStatMongoDAO {
 	 * @param shortRemoteServer contains the name and ip of the server
 	 * @param typeOfStat contains type of statistic to obtain
 	 * @param typeOfMetric contains type of metrics to obtain
+	 * @param minutesToCheck contains minutes to get metrics.
+	 * @param numerOfMetrics contains number of metrics to return
+	 * @param repeatInterval This value is used for doing the adding zeros in the system when no data has been captured previously, and represent the period the system gets metrcis
+	 * @param value_inteporlation value to add when interpolation is done
+	 * @return Reduced List of metrics in this period of time with parameters passed, number of metrcis is detailed by parameter numerOfMetrics, and calculated doing the average for all metrics on each period metrics.
+	 */
+	public ArrayList<BasicStat> getMetricDetails (ShortRemoteServerId shortRemoteServer,String typeOfStat,String typeOfMetric, Integer minutesToCheck, Integer numerOfMetrics, long repeatInterval, double value_inteporlation);
+	/**
+	 * Method to get a metric from database sine some minutes ago till now
+	 * @param shortRemoteServer contains the name and ip of the server
+	 * @param typeOfStat contains type of statistic to obtain
+	 * @param typeOfMetric contains type of metrics to obtain
 	 * @param startDate Startime of the period to check
 	 * @param endDate Endtime of perio to check
 	 * @return List of metrics in this period of time with parameters passed.
 	 */
 	public ArrayList<BasicStat> getMetricDetails (ShortRemoteServerId shortRemoteServer,String typeOfStat,String typeOfMetric, Date startDate, Date endDate);
+	
+
+	/**
+	 * Method to get a metric from database sine some minutes ago till now
+	 * @param shortRemoteServer contains the name and ip of the server
+	 * @param typeOfStat contains type of statistic to obtain
+	 * @param typeOfMetric contains type of metrics to obtain
+	 * @param startDate Startime of the period to check
+	 * @param endDate Endtime of perio to check
+	 * @param numerOfMetrics contains number of metrics to return
+	 * @param repeatInterval This value is used for doing the adding zeros in the system when no data has been captured previously, and represent the period the system gets metrcis
+	 * @param value_inteporlation value to add when interpolation is done
+	 * @return Reduced List of metrics in this period of time with parameters passed, number of metrcis is detailed by parameter numerOfMetrics, and calculated doing the average for all metrics on each period metrics.
+
+	 */
+	public ArrayList<BasicStat> getMetricDetails (ShortRemoteServerId shortRemoteServer,String typeOfStat,String typeOfMetric, Date startDate, Date endDate, Integer numerOfMetrics, long repeatInterval, double value_inteporlation);
+
 	
 	
 	
