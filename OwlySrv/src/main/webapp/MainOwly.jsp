@@ -391,9 +391,29 @@
 		
 	</ul>
 	<div id="tabs-main">
-	In this page we will write some description about the used Owly Application
-	<br>
-	<button id="main_button">Access</button>
+	
+	<table style="text-align: left; width: 660px; height: 519px;"border="0" cellpadding="2" cellspacing="2">
+	  <tbody>
+	    <tr align="center">
+	      <td colspan="2" rowspan="1"><big><big><span
+	 style="font-weight: bold;">The Owly Server</span></big></big></td>
+	    </tr>
+	    <tr>
+	      <td><img style="width: 341px; height: 546px;"alt="" src="OwlySrv.gif"></td>
+	      <td style="vertical-align: top;">
+	      	      <br><br><br>	
+		      Owly Server is a Server developed for monitoring any kind of metrics that are collected from the OwlyClient, and send to the Server.<br>
+		      <br>The main idea is that for any new project based in Owly Server only the Client has to be coded and the Server will give the power to do metrics	capure, representation, threshold alerts, ...
+		      <br>
+		      <br>
+		      Owly Server is an Open Source Project. All details related to the project can be follow in the github project : OwlyServer<br>
+	      </td>
+	    </tr>
+	    <tr align="center">
+	      <td colspan="2" rowspan="1"><button id="main_button">Access to OwlyServer</button></td>
+	    </tr>
+	  </tbody>
+	</table>
 	</div>
 	
 	<!-- Part related to the stadistics Server -->

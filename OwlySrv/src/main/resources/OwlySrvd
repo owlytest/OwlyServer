@@ -7,7 +7,7 @@
 
 CATALINA_HOME=#catalina_home#
 
-. ./OwlySrvd.conf
+. /etc/init.d/OwlySrvd.conf
 
 
 case $1 in
