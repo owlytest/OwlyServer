@@ -1,5 +1,5 @@
 	Owly Server Software
-	Copyright [2013] by Antonio Menendez Lopez
+	Copyright 2013 by Antonio Menendez Lopez
    
 	Licensed under the Apache License, Version 2.0 (the "License");
 	you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@
 	   http://quartz-scheduler.org/
 	   
 	   org.mongodb drivers (v2.10.1) : is developed under  Apache License v2.0.
-	   Copyright © 2013 10gen, Inc. Licensed under Creative Commons. MongoDB, Mongo, and the leaf logo are registered trademarks of 10gen, Inc.
+	   Copyright ï¿½ 2013 10gen, Inc. Licensed under Creative Commons. MongoDB, Mongo, and the leaf logo are registered trademarks of 10gen, Inc.
 	   http://www.mongodb.org/
 	   
 	   json-simple (com.googlecode.json-simple) (v1.1) :  is developed under Apache License v2.0.
@@ -42,16 +42,16 @@
 	   
 	   
 	   log4j (v1.2.17): Appache logging servers ( log4j ).
-	   Copyright © 2012 The Apache Software Foundation, Licensed under the Apache License, Version 2.0.
+	   Copyright ï¿½ 2012 The Apache Software Foundation, Licensed under the Apache License, Version 2.0.
 	   http://logging.apache.org/log4j/1.2/
 	   
 	   Xerces Software (v2.11.0) is developed in The Apache Software License.
-	   Copyright © 1999-2012 The Apache Software Foundation. 
+	   Copyright ï¿½ 1999-2012 The Apache Software Foundation. 
 	   http://xerces.apache.org/
 	   
 	   
 	   Apache Tomcat (v7.0.39) is developed in an open and participatory environment and released under the Apache License version 2.
-	   Copyright © 1999-2013, The Apache Software Foundation
+	   Copyright ï¿½ 1999-2013, The Apache Software Foundation
 	   http://tomcat.apache.org
 		  
 	   jquery (v1.9.1): Jquery is a project developed under the terms of the MIT License.
