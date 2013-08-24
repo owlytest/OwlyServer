@@ -1,5 +1,5 @@
 	Owly Client Software
-	Copyright [2013] by Antonio Menendez Lopez
+	Copyright 2013 by Antonio Menendez Lopez
    
 	Licensed under the Apache License, Version 2.0 (the "License");
 	you may not use this file except in compliance with the License.
@@ -34,7 +34,7 @@
 	   http://code.google.com/p/google-gson
 	   
 	   log4j (v1.2.17): Appache logging servers ( log4j ).
-	   Copyright © 2012 The Apache Software Foundation, Licensed under the Apache License, Version 2.0.
+	   Copyright ï¿½ 2012 The Apache Software Foundation, Licensed under the Apache License, Version 2.0.
 	   http://logging.apache.org/log4j/1.2/
 	   
 	   spark framework (v0.9.9.4-SNAPSHOT) : Is a web framework licensed under the Apache License, Version 2.0 (the "License");
